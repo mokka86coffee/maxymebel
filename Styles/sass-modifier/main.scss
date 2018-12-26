@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css?family=Spicy+Rice');
+@import 'mixins';
+$ff: 'Spicy Rice', cursive;
+
+//Media mixin
+
+@mixin media600 {
+	@media only screen and (max-width: 600px) {
+		@content;
+	}
+}
+
+
+$scrSizes : (
+	sm: 500px,
+	md: 800px,
+	lg: 1000px,
+	xl: 1200px
+);
+
+@mixin mque($size) {
+   $point: map-get($scrSizes, $size);
+   @media only screen and (max-width: $point) {
+   	     @content;
+   }
+} 
+
+//Media mixin
+
+//width divs
+
+$setkaCnt: 6;
+
+@for $i from 1 through $setkaCnt {
+	@if ($i%2 == 0){
+		.col-#{$i} {
+			width: (100% / $setkaCnt) * $i;
+			background-color: #fff;
+		}
+	}
+	@else {
+		.col-#{$i} {
+			width: (100% / $setkaCnt) * $i;
+			background-color: #000;
+		}
+
+	}
+
+	.col-#{$i} {
+		color: if($i%2 == 0, orange, purple);
+		background-color: if($i%2 == 0, #fff, #000);
+		width: (100% / $setkaCnt) * $i;
+		& img {
+			width: 80px;			
+			@include mque(lg) {
+				width: 100%;
+			}
+		}
+	}
+}
+
+//width divs
+
+@function func ($args...) {
+    $count: 0;
+	@each $arg in $args{
+	              $count: $count + $arg;
+	}
+	@return $count;
+}
+
+//border sides mixin
+
+@mixin border ($sides: all, $width: 1px, $style: solid, $color: #000) {
+	@if ($sides == all) {
+		border: $width $style $color;
+	}
+	@else {		
+		border-#{$sides}: $width $style $color;
+	}
+}
+
+//border sides mixin
+
+$shadowClr: #000;
+
+@mixin trans($color: white) {
+	transition: all 1s;
+	color: $color;
+	.tr {
+		color: #eee;
+		@include border;
+		height: func(1,2,3,4);
+		@content;
+	}
+}
+
+
+* {
+	box-sizing: border-box;
+	font-size: 40px;
+	font-family: $ff;
+}
+
+%button {
+	color: #888;
+	background-color: #fff;
+	border: 5px solid orange;
+	outline: none;
+	display: block;
+	margin: 50px 0;
+    box-shadow: 0 0 20px $shadowClr;
+    @include trans(red) {
+    	&--tran {
+          color: white;
+    	}
+    }
+	@include media600 {
+		& {
+			color: #000;
+		}
+		& .kk {
+			color: #ddd;
+		}
+	}
+}
+
+.button1 {
+	@extend %button;
+	padding: 20px;
+	&:active {
+		background-color: rgba(#000,.5);
+	}
+	&:hover {
+        box-shadow: 0 0 10px $shadowClr;
+        cursor: pointer;
+		color: lighten(skyblue, 20);	
+	}
+	@include media600 {
+		& {
+			color: #000;
+		}
+	}
+}
+
