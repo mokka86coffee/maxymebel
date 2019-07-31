@@ -28,8 +28,8 @@ class App extends Component {
         || 
         (comp == 'tables' && this.state.comp == 'chairs')
           ) 
-          { setTimeout( ()=>this.setState(state=>({comp, compChngd: false})), 0 ) }
-      else { setTimeout( ()=>this.setState(state=>({comp, compChngd: false})), 1300 ) }
+          { setTimeout( () => this.setState(state=>({comp, compChngd: false})), 0 ) }
+      else { setTimeout( () => this.setState(state=>({comp, compChngd: false})), 1300 ) }
         
       this.setState(state=>({ compChngd: comp }));
     }
